@@ -25,7 +25,7 @@ export function LoginForm() {
   return (
     <form action={handleSubmit} className="space-y-4">
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+        <div className="bg-red-900/20 border border-red-500 text-red-400 px-4 py-3 rounded">
           {error}
         </div>
       )}
@@ -62,9 +62,9 @@ export function LoginForm() {
         {loading ? 'Signing in...' : 'Sign in'}
       </Button>
 
-      <p className="text-center text-sm text-gray-600">
+      <p className="text-center text-sm text-gray-400">
         Don&apos;t have an account?{' '}
-        <Link href="/register" className="text-blue-600 hover:underline">
+        <Link href="/register" className="text-primary hover:text-primary-light hover:underline">
           Register
         </Link>
       </p>
