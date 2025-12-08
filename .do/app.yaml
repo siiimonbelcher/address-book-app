@@ -1,0 +1,51 @@
+name: address-book
+region: nyc
+
+services:
+  - name: web
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: your-username/your-repo
+
+    build_command: |
+      npm ci
+      npx prisma generate
+      npx prisma migrate deploy
+      npm run build
+
+    run_command: npm start
+
+    environment_slug: node-js
+
+    instance_count: 1
+    instance_size_slug: basic-xxs
+
+    http_port: 3000
+
+    health_check:
+      http_path: /
+      initial_delay_seconds: 30
+      period_seconds: 30
+      timeout_seconds: 10
+      success_threshold: 1
+      failure_threshold: 3
+
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value: file:/app/data/sqlite.db
+      - key: NEXTAUTH_URL
+        scope: RUN_TIME
+        type: SECRET
+      - key: NEXTAUTH_SECRET
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+
+    routes:
+      - path: /
+
+# Note: DigitalOcean App Platform has limited support for persistent volumes
+# For production use, consider PostgreSQL managed database
+# Alternative: use the filesystem but be aware data may be lost on redeploys
