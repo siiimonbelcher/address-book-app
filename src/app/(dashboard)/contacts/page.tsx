@@ -58,7 +58,7 @@ export default async function ContactsPage({
               name="search"
               placeholder="Search by name, email, or phone..."
               defaultValue={search}
-              className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+              className="flex h-10 w-full rounded-md border border-border bg-[#1c1c1e] px-3 py-2 text-sm text-white ring-offset-background placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             />
             <Button type="submit">Search</Button>
             {search && (
@@ -90,27 +90,27 @@ export default async function ContactsPage({
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {contacts.map((contact) => (
-            <Card key={contact.id} className="hover:shadow-md transition-shadow">
+            <Card key={contact.id} className="hover:shadow-lg hover:shadow-primary/20 hover:border-primary/50 transition-all duration-300">
               <CardHeader>
-                <CardTitle className="text-lg">
+                <CardTitle className="text-lg text-foreground">
                   {contact.firstName} {contact.lastName}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
                 {contact.email && (
-                  <p className="text-sm text-gray-600">{contact.email}</p>
+                  <p className="text-sm text-gray-400">{contact.email}</p>
                 )}
                 {contact.phone && (
-                  <p className="text-sm text-gray-600">{contact.phone}</p>
+                  <p className="text-sm text-gray-400">{contact.phone}</p>
                 )}
                 {contact.city && contact.state && (
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-400">
                     {contact.city}, {contact.state}
                   </p>
                 )}
                 <div className="pt-4">
                   <Link href={`/contacts/${contact.id}`}>
-                    <Button variant="outline" size="sm" className="w-full">
+                    <Button variant="outline" size="sm" className="w-full hover:bg-primary hover:text-white hover:border-primary">
                       View Details
                     </Button>
                   </Link>

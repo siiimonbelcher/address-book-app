@@ -11,9 +11,9 @@ export async function middleware(request: NextRequest) {
   // Protected paths
   const isProtectedPath = pathname.startsWith('/dashboard') || pathname.startsWith('/contacts')
 
-  // Get session cookie
-  const sessionCookie = request.cookies.get('authjs.session-token') ||
-                       request.cookies.get('__Secure-authjs.session-token')
+  // Get session cookie (NextAuth v4 cookie names)
+  const sessionCookie = request.cookies.get('next-auth.session-token') ||
+                       request.cookies.get('__Secure-next-auth.session-token')
 
   // If trying to access protected path without session
   if (isProtectedPath && !sessionCookie) {

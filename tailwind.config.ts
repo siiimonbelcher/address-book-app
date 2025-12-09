@@ -9,18 +9,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: '#1a1a2e',
-        foreground: '#eaeaea',
+        background: '#0a0a0a',
+        foreground: '#f5f5f7',
         primary: {
-          DEFAULT: '#9333ea',
-          dark: '#7e22ce',
-          light: '#a855f7',
+          DEFAULT: '#ff6b35',
+          dark: '#ff5722',
+          light: '#ff8c66',
+        },
+        secondary: {
+          DEFAULT: '#bf5af2',
+          dark: '#9333ea',
+          light: '#d084ff',
         },
         card: {
-          DEFAULT: '#16213e',
-          hover: '#1e2a47',
+          DEFAULT: '#1c1c1e',
+          hover: '#2c2c2e',
         },
-        border: '#2d3748',
+        border: '#38383a',
       },
     },
   },

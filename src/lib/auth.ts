@@ -1,13 +1,15 @@
-import type { NextAuthConfig } from 'next-auth'
-import NextAuth from 'next-auth'
-import Credentials from 'next-auth/providers/credentials'
+import type { NextAuthOptions } from 'next-auth'
+import NextAuth, { getServerSession } from 'next-auth'
+import CredentialsProvider from 'next-auth/providers/credentials'
 import { prisma } from './prisma'
 import { verifyPassword } from './security/password'
 import { loginSchema } from './validators'
 
-export const authConfig: NextAuthConfig = {
+export const authOptions: NextAuthOptions = {
   providers: [
-    Credentials({
+    CredentialsProvider({
+      id: 'credentials',
+      name: 'Credentials',
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
@@ -33,7 +35,7 @@ export const authConfig: NextAuthConfig = {
           return {
             id: user.id,
             email: user.email,
-            name: user.name,
+            name: user.name || null,
           }
         } catch (error) {
           console.error('Authorization error:', error)
@@ -46,29 +48,13 @@ export const authConfig: NextAuthConfig = {
     signIn: '/login',
   },
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user
-      const isOnDashboard = nextUrl.pathname.startsWith('/dashboard')
-      const isOnContacts = nextUrl.pathname.startsWith('/contacts')
-
-      if (isOnDashboard || isOnContacts) {
-        if (isLoggedIn) return true
-        return false
-      }
-
-      if (isLoggedIn && (nextUrl.pathname === '/login' || nextUrl.pathname === '/register')) {
-        return Response.redirect(new URL('/dashboard', nextUrl))
-      }
-
-      return true
-    },
-    jwt({ token, user }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id
       }
       return token
     },
-    session({ session, token }) {
+    async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string
       }
@@ -78,6 +64,11 @@ export const authConfig: NextAuthConfig = {
   session: {
     strategy: 'jwt',
   },
+  secret: process.env.NEXTAUTH_SECRET,
 }
 
-export const { handlers, auth, signIn, signOut } = NextAuth(authConfig)
+export function auth() {
+  return getServerSession(authOptions)
+}
+
+export default NextAuth(authOptions)

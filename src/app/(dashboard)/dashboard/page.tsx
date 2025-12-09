@@ -33,27 +33,27 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Card>
+        <Card className="hover:border-secondary/50 transition-colors">
           <CardHeader>
             <CardTitle>Total Contacts</CardTitle>
             <CardDescription>Your address book</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-bold">{contactCount}</div>
+            <div className="text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">{contactCount}</div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="hover:border-primary/50 transition-colors">
           <CardHeader>
             <CardTitle>Quick Actions</CardTitle>
             <CardDescription>Manage your contacts</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <Link href="/contacts/new">
-              <Button className="w-full">Add Contact</Button>
+              <Button className="w-full bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary">Add Contact</Button>
             </Link>
             <Link href="/contacts">
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full border-secondary text-secondary hover:bg-secondary hover:text-white">
                 View All Contacts
               </Button>
             </Link>
